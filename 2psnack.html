@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Player Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #111;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #scoreBoard {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #backgroundCanvas {
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreBoard">Player 1: 0 | Player 2: 0 | High Score: 0</div>
+    <canvas id="backgroundCanvas" width="800" height="800"></canvas>
+    <canvas id="gameCanvas" width="800" height="800"></canvas>
+    <script>
+        const gameCanvas = document.getElementById('gameCanvas');
+        const ctx = gameCanvas.getContext('2d');
+        const bgCanvas = document.getElementById('backgroundCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const gridSize = 20;
+        const tileCount = gameCanvas.width / gridSize; // 40x40 grid
+        let snake1 = [{ x: 10, y: 10 }]; // Player 1 (WASD)
+        let snake2 = [{ x: 30, y: 30 }]; // Player 2 (Arrows)
+        let fruit = { x: 20, y: 20 };
+        let dx1 = 0, dy1 = 0; // Player 1 direction
+        let dx2 = 0, dy2 = 0; // Player 2 direction
+        let score1 = 0, score2 = 0;
+        let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+        let gameSpeed = 100;
+        let fruits = ['🍎', '🍊', '🍇', '🍋', '🍉'];
+        let currentFruit = fruits[Math.floor(Math.random() * fruits.length)];
+        let gameOverFlag = false;
+
+        // Update score display
+        document.getElementById('scoreBoard').textContent = `Player 1: ${score1} | Player 2: ${score2} | High Score: ${highScore}`;
+
+        // Background animation variables
+        let particles = [];
+        const particleCount = 50;
+
+        // Create particles for background animation
+        function initParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    radius: Math.random() * 5 + 2,
+                    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+                    speedX: (Math.random() - 0.5) * 4,
+                    speedY: (Math.random() - 0.5) * 4
+                });
+            }
+        }
+
+        // Animate background
+        function animateBackground() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0 || p.x > bgCanvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > bgCanvas.height) p.speedY *= -1;
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                bgCtx.fillStyle = p.color;
+                bgCtx.fill();
+            });
+            requestAnimationFrame(animateBackground);
+        }
+
+        // Initialize particles and start background animation
+        initParticles();
+        animateBackground();
+
+        document.addEventListener('keydown', changeDirection);
+        function changeDirection(event) {
+            event.preventDefault(); // Prevent arrow keys from scrolling
+            switch (event.key.toLowerCase()) {
+                // Player 1 (WASD)
+                case 'w':
+                    if (dy1 !== 1) { dx1 = 0; dy1 = -1; }
+                    break;
+                case 's':
+                    if (dy1 !== -1) { dx1 = 0; dy1 = 1; }
+                    break;
+                case 'a':
+                    if (dx1 !== 1) { dx1 = -1; dy1 = 0; }
+                    break;
+                case 'd':
+                    if (dx1 !== -1) { dx1 = 1; dy1 = 0; }
+                    break;
+                // Player 2 (Arrows)
+                case 'arrowup':
+                    if (dy2 !== 1) { dx2 = 0; dy2 = -1; }
+                    break;
+                case 'arrowdown':
+                    if (dy2 !== -1) { dx2 = 0; dy2 = 1; }
+                    break;
+                case 'arrowleft':
+                    if (dx2 !== 1) { dx2 = -1; dy2 = 0; }
+                    break;
+                case 'arrowright':
+                    if (dx2 !== -1) { dx2 = 1; dy2 = 0; }
+                    break;
+            }
+        }
+
+        function drawGame() {
+            if (gameOverFlag) return;
+
+            // Clear game canvas
+            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+            // Move snakes
+            const head1 = { x: snake1[0].x + dx1, y: snake1[0].y + dy1 };
+            const head2 = { x: snake2[0].x + dx2, y: snake2[0].y + dy2 };
+            snake1.unshift(head1);
+            snake2.unshift(head2);
+
+            // Check if fruit is eaten
+            let fruitEaten = false;
+            if (head1.x === fruit.x && head1.y === fruit.y) {
+                score1 += 10;
+                fruitEaten = true;
+            } else if (head2.x === fruit.x && head2.y === fruit.y) {
+                score2 += 10;
+                fruitEaten = true;
+            }
+            if (fruitEaten) {
+                if (score1 > highScore) highScore = score1;
+                if (score2 > highScore) highScore = score2;
+                localStorage.setItem('highScore', highScore);
+                document.getElementById('scoreBoard').textContent = `Player 1: ${score1} | Player 2: ${score2} | High Score: ${highScore}`;
+                generateFruit();
+            } else {
+                snake1.pop();
+                snake2.pop();
+            }
+
+            // Draw snakes
+            ctx.fillStyle = '#2ecc71'; // Player 1 (Green)
+            snake1.forEach(segment => {
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+            });
+            ctx.fillStyle = '#e74c3c'; // Player 2 (Red)
+            snake2.forEach(segment => {
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+            });
+
+            // Draw fruit
+            ctx.font = '20px Arial';
+            ctx.fillText(currentFruit, fruit.x * gridSize, fruit.y * gridSize + gridSize - 2);
+
+            // Check collisions
+            if (checkCollision(head1, snake1, snake2) || checkCollision(head2, snake2, snake1)) {
+                gameOver();
+                return;
+            }
+
+            setTimeout(drawGame, gameSpeed);
+        }
+
+        function checkCollision(head, snake, otherSnake) {
+            // Wall collision
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                return true;
+            }
+            // Self collision
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    return true;
+                }
+            }
+            // Collision with other snake
+            for (let segment of otherSnake) {
+                if (head.x === segment.x && head.y === segment.y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function generateFruit() {
+            fruit.x = Math.floor(Math.random() * tileCount);
+            fruit.y = Math.floor(Math.random() * tileCount);
+            currentFruit = fruits[Math.floor(Math.random() * fruits.length)];
+            // Ensure fruit doesn't spawn on either snake
+            let invalid = true;
+            while (invalid) {
+                invalid = false;
+                for (let segment of snake1.concat(snake2)) {
+                    if (fruit.x === segment.x && fruit.y === segment.y) {
+                        fruit.x = Math.floor(Math.random() * tileCount);
+                        fruit.y = Math.floor(Math.random() * tileCount);
+                        invalid = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function gameOver() {
+            gameOverFlag = true;
+            alert(`Game Over!\nPlayer 1 Score: ${score1}\nPlayer 2 Score: ${score2}`);
+            snake1 = [{ x: 10, y: 10 }];
+            snake2 = [{ x: 30, y: 30 }];
+            dx1 = 0; dy1 = 0;
+            dx2 = 0; dy2 = 0;
+            score1 = 0; score2 = 0;
+            document.getElementById('scoreBoard').textContent = `Player 1: ${score1} | Player 2: ${score2} | High Score: ${highScore}`;
+            generateFruit();
+            gameOverFlag = false;
+            drawGame();
+        }
+
+        // Start the game
+        drawGame();
+    </script>
+</body>
+</html>
