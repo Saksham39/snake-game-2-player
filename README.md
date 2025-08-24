@@ -41,29 +41,7 @@ Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.
 - **High Score**: The highest score achieved by either player is saved in the browser's `localStorage` and persists across sessions.
 - Displayed as: `Player 1: X | Player 2: Y | High Score: Z`.
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/snake-game.git
-   ```
-2. Open `index.html` in a web browser to play locally.
 
-## Hosting
-Host the game on GitHub Pages:
-1. Push the code to a GitHub repository.
-2. Go to **Settings > Pages**, set **Source** to `main` branch and `/ (root)`.
-3. Access the game at: `https://yourusername.github.io/snake-game/`.
-
-## Tech Stack
-- **HTML5**: Game structure and canvas.
-- **CSS3**: Styling and layout.
-- **JavaScript**: Game logic, canvas rendering, and background animation.
-
-## Contributing
-Ideas for improvements? Fork the repo, make changes, and submit a pull request! Suggestions:
-- Add sound effects for fruit collection or game over.
-- Introduce power-ups or different game modes.
-- Customize the background animation.
 
 
 
