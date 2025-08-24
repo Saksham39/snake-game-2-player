@@ -1,4 +1,3 @@
-Below is a concise and professional README.md file for your two-player Snake game, including all the requested details (how it works, how to play, how scores are calculated) and prominently featuring your Telegram and X (Twitter) IDs at the top. I've kept it straightforward, assuming you'll manually create and upload this to your GitHub repository. Replace `[Your Telegram ID]` and `[Your X Handle]` with your actual IDs.
 
 ---
 
@@ -41,11 +40,3 @@ Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.
 - **High Score**: The highest score achieved by either player is saved in the browser's `localStorage` and persists across sessions.
 - Displayed as: `Player 1: X | Player 2: Y | High Score: Z`.
 
-
-
-
-
-
-     ```
-
-If you need help with hosting, adding a screenshot, or tweaking the README further, let me know!
