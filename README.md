@@ -40,3 +40,5 @@ Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.
 - **High Score**: The highest score achieved by either player is saved in the browser's `localStorage` and persists across sessions.
 - Displayed as: `Player 1: X | Player 2: Y | High Score: Z`.
 
+
+Have a nice day
