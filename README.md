@@ -12,7 +12,7 @@ A thrilling two-player Snake game built with HTML, CSS, and JavaScript. Compete 
 Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.io/snake-game/]
 
 ## How It Works
-- **Two Snakes**: Two players control separate snakes on a 40x40 grid (800x800 canvas). fun to play
+- **Two Snakes**: Two players control separate snakes on a 40x40 grid (800x800 canvas).
 - **Controls**:
   - Player 1: Uses **WASD** keys (W: up, A: left, S: down, D: right).
   - Player 2: Uses **Arrow** keys (Up, Left, Down, Right).
