@@ -4,7 +4,7 @@
 # Two-Player Snake Game 🐍🐍
 
 **Contact Me**:  
-📱 **Telegram**: [saksham_in]  
+📱 **Telegram**: [saksham_in]       
 🐦 **X (Twitter)**: [@saksham_crypto]
 
 A thrilling two-player Snake game built with HTML, CSS, and JavaScript. Compete with a friend on a 40x40 grid, collect fruits, and dodge a distracting animated background that challenges your focus!
@@ -12,7 +12,7 @@ A thrilling two-player Snake game built with HTML, CSS, and JavaScript. Compete 
 Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.io/snake-game/]
 
 ## How It Works
-- **Two Snakes**: Two players control separate snakes on a 40x40 grid (800x800 canvas).
+- **Two Snakes**: Two players control separate snakes on a 40x40 grid (800x800 canvas). fun to play
 - **Controls**:
   - Player 1: Uses **WASD** keys (W: up, A: left, S: down, D: right).
   - Player 2: Uses **Arrow** keys (Up, Left, Down, Right).
