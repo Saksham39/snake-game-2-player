@@ -16,7 +16,7 @@ Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.
 - **Controls**:
   - Player 1: Uses **WASD** keys (W: up, A: left, S: down, D: right).
   - Player 2: Uses **Arrow** keys (Up, Left, Down, Right).
-- **Objective**: Collect randomly spawning fruits (🍎, 🍊, 🍇, 🍋, 🍉) to grow your snake and earn points.
+- **Objective**: Collect randomly spawning fruits (🍎, 🍊, 🍇, 🍋, 🍉, 🍟, 🌭, 🍿, 🍕, 🥓, 🍳) to grow your snake and earn points.
 - **Collisions**: The game ends if either snake hits the walls, itself, or the other snake.
 - **Background**: A distracting animation with colorful, bouncing particles makes it harder to focus, increasing the challenge.
 - **Scoring**: Scores and high scores are tracked and saved using `localStorage`.
@@ -41,4 +41,4 @@ Play it here: [Insert Live URL after hosting, e.g., https://yourusername.github.
 - Displayed as: `Player 1: X | Player 2: Y | High Score: Z`.
 
 
-Have a nice day
+Have a nice day ❤️❤️
